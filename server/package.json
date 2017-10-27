@@ -4,7 +4,8 @@
   "description": "Express/Node server for React rendering",
   "main": "index.js",
   "scripts": {
-    "dev:build:server": "webpack --config webpack.server.js"
+    "dev:server": "nodemon --watch build --exec \"node build/bundle.js\"",
+    "dev:build:server": "webpack --config webpack.server.js --watch"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
+    "nodemon": "^1.12.1",
     "prettier-eslint": "^8.2.1",
     "webpack": "^3.8.1"
   }
