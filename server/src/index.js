@@ -8,6 +8,6 @@ const PORT = process.env.PORT || 3000
 // client bundle as a static folder to incoming HTTP requests.
 app.use(express.static('public'))
 
-app.get('/', (req, res) => res.send(renderer()).status(200))
+app.get('*', (req, res) => res.send(renderer(req)).status(200))
 
 app.listen(PORT, () => console.log(`Server listening on Port:${PORT}`))
