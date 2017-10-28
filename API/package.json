@@ -1,0 +1,25 @@
+{
+  "name": "API",
+  "version": "1.0.0",
+  "description": "API/business layer of my React SSR app",
+  "main": "index.js",
+  "scripts": {
+    "dev:api": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "nodemon": "^1.12.1",
+    "prettier-eslint": "^8.2.1"
+  }
+}
