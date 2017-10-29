@@ -9,4 +9,9 @@ module.exports = {
   getAdminList(req, res) {
     res.send(admins).status(200)
   },
+
+  logout(req, res) {
+    req.logout()
+    res.redirect('/')
+  },
 }

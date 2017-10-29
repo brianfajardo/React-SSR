@@ -14,4 +14,5 @@ module.exports = app => {
   // User routes
   app.get('/users', user.getUserList)
   app.get('/admins', user.getAdminList)
+  app.get('/logout', user.logout)
 }

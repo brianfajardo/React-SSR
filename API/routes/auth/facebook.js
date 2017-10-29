@@ -6,7 +6,7 @@ module.exports = {
     passport.authenticate('facebook', { scope: ['email', 'public_profile'] })
   },
 
-  callback(req, res) {
+  callback() {
     passport.authenticate('facebook', (req, res) => {
       // Do something after successful Facebook oAuth.
       res.send('Successful Facebook oAuth!')
