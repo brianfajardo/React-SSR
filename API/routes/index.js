@@ -1,3 +1,4 @@
+const passport = require('passport')
 const auth = require('./auth')
 const user = require('./user')
 
@@ -8,8 +9,16 @@ module.exports = app => {
   )
 
   // Authentication routes
-  app.get('/auth/facebook', auth.facebook.oAuth)
-  app.get('/auth/facebook/callback', auth.facebook.callback)
+  app.get(
+    '/auth/facebook',
+    passport.authenticate('facebook', { scope: ['email', 'public_profile'] })
+  )
+
+  app.get(
+    '/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    auth.facebook.callback
+  )
 
   // User routes
   app.get('/users', user.getUserList)
