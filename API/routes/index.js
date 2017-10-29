@@ -1,4 +1,5 @@
-const userRoutes = require('./user')
+const auth = require('./auth')
+const user = require('./user')
 
 module.exports = app => {
   // Home message
@@ -6,7 +7,11 @@ module.exports = app => {
     res.send('This is my API server for my Rendering server!')
   )
 
+  // Authentication routes
+  app.get('/auth/facebook', auth.facebook.oAuth)
+  app.get('/auth/facebook/callback', auth.facebook.callback)
+
   // User routes
-  app.get('/users', userRoutes.getUserList)
-  app.get('/users/admin', userRoutes.getAdminList)
+  app.get('/users', user.getUserList)
+  app.get('/admins', user.getAdminList)
 }
