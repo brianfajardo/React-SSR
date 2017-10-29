@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
-require('./models')
+const { mongoURI } = require('../config')
+require('./models/User')
 
+// Replace Mongoose's Bluebird Promise with ES6 Promises
 mongoose.Promise = global.Promise
-mongoose.connect = ('setup mongoURI')
+
+// Connect to mLab service.
+mongoose.connect(mongoURI)

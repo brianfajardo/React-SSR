@@ -10,6 +10,7 @@ module.exports = {
     passport.authenticate('facebook', (req, res) => {
       // Do something after successful Facebook oAuth.
       res.send('Successful Facebook oAuth!')
+      // res.redirect('to somewhere')
     })
   },
 }
