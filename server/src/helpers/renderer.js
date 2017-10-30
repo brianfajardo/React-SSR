@@ -1,10 +1,11 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 import Router from '../client/Router'
 
-export default req => {
+export default (req, store) => {
   // Context object contains the results of the render. In a static server environment
   // we can't change the app state. Instead, we use the context prop to find out what
   // the result of rendering was. If we find a context.url, then we know the app redirected.
@@ -14,11 +15,14 @@ export default req => {
   // JSX is given to renderToString to be passed as content to fill the html template
   // for initial SSR HTML.
   const content = renderToString(
-    <StaticRouter location={req.path} context={context}>
-      <Router />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.path} context={context}>
+        <Router />
+      </StaticRouter>
+    </Provider>
   )
 
+  // Todo: Replace this html template with an actual index.html and replace stuff...
   return `
     <html>
       <head></head>
