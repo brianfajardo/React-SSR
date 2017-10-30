@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 4000
 // Middleware
 app
   .use(cors())
-  .use(cookieSession({ keys: cookieKey }))
+  .use(
+    cookieSession({
+      keys: [cookieKey],
+      maxAge: 24 * 60 * 60 * 1000, // 24 hrs
+    })
+  )
   .use(passport.initialize())
   .use(passport.session())
 

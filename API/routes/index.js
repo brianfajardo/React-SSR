@@ -1,6 +1,7 @@
 const passport = require('passport')
 const auth = require('./auth')
 const user = require('./user')
+const { requireAuth } = require('../middleware')
 
 module.exports = app => {
   // Home message
@@ -22,6 +23,6 @@ module.exports = app => {
 
   // User routes
   app.get('/users', user.getUserList)
-  app.get('/admins', user.getAdminList)
+  app.get('/admins', requireAuth, user.getAdminList)
   app.get('/logout', user.logout)
 }
