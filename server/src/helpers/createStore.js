@@ -6,9 +6,7 @@ import rootReducer from '../client/reducers'
 // We need some way to detect when we finish all our initial data loading
 // before we actually attempt to render our application.
 
-export default (initialState = {}) => {
-  const middleware = applyMiddleware(reduxThunk)
-  const store = createStore(rootReducer, initialState, middleware)
+const middleware = applyMiddleware(reduxThunk)
 
-  return store
-}
+export default (initialState = {}) =>
+  createStore(rootReducer, initialState, middleware)

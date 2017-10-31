@@ -27804,12 +27804,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
 
-var store = function store() {
+// Client-side Redux store.
+
+exports.default = function () {
   var initialState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   return (0, _redux.createStore)(_reducers2.default, initialState, middleware);
 };
-
-exports.default = store;
 
 /***/ }),
 /* 117 */

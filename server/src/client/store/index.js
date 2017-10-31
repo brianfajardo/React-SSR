@@ -4,7 +4,6 @@ import rootReducer from '../reducers'
 
 const middleware = applyMiddleware(reduxThunk)
 
-const store = (initialState = {}) =>
+// Client-side Redux store.
+export default (initialState = {}) =>
   createStore(rootReducer, initialState, middleware)
-
-export default store
