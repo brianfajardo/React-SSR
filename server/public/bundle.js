@@ -7454,6 +7454,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var FETCH_USERS = exports.FETCH_USERS = 'Halloween is tomorrow!!';
+var LOADING = exports.LOADING = 'loading in 2017 feels bad..';
 
 /***/ }),
 /* 176 */
@@ -37431,15 +37432,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _actionTypes = __webpack_require__(175);
 
+var initialState = {
+  loading: false,
+  users: []
+};
+
 exports.default = function () {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
 
   switch (action.type) {
+    case _actionTypes.LOADING:
+      return _extends({}, state, {
+        loading: true
+      });
     case _actionTypes.FETCH_USERS:
-      return action.payload;
+      return _extends({}, state, {
+        loading: false,
+        users: action.payload
+      });
     default:
       return state;
   }
@@ -37556,14 +37571,22 @@ var UsersList = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _props = this.props,
+          isLoading = _props.isLoading,
+          users = _props.users;
+
       return _react2.default.createElement(
         'div',
         null,
         'This is a public users list:',
-        _react2.default.createElement(
+        isLoading ? _react2.default.createElement(
+          'p',
+          null,
+          'Loading in 2017...'
+        ) : _react2.default.createElement(
           'ul',
           null,
-          this.props.users.map(function (user) {
+          users.map(function (user) {
             return _react2.default.createElement(
               'li',
               { key: user.id },
@@ -37580,7 +37603,8 @@ var UsersList = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    users: state.users
+    users: state.users.users,
+    isLoading: state.users.loading
   };
 };
 
@@ -37621,15 +37645,16 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              dispatch({ type: _actionTypes.LOADING });
+              _context.next = 3;
               return _axios2.default.get(_config2.default.BASE_API_URL + '/users');
 
-            case 2:
+            case 3:
               _ref2 = _context.sent;
               data = _ref2.data;
               return _context.abrupt('return', dispatch({ type: _actionTypes.FETCH_USERS, payload: data }));
 
-            case 5:
+            case 6:
             case 'end':
               return _context.stop();
           }

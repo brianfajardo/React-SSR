@@ -13,6 +13,7 @@ module.exports = {
                requirements of the latest 2 versions of all popular browsers. */
             ['env', { targets: { browsers: ['last 2 versions'] } }],
           ],
+          plugins: ['transform-object-rest-spread'],
         },
       },
     ],
