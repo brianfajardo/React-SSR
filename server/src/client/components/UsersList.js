@@ -4,24 +4,23 @@ import { fetchUsers } from '../actions'
 
 class UsersList extends Component {
   componentDidMount() {
-    console.log('UsersList Did Mount')
     this.props.fetchUsers()
-  }
-
-  renderUsers() {
-    return this.props.users.map(user => <li key={user.id}>{user.name}</li>)
   }
 
   render() {
     return (
       <div>
-        <h1>Users List:</h1>
-        <ul>{this.renderUsers()}</ul>
+        This is a public users list:
+        <ul>
+          {this.props.users.map(user => <li key={user.id}>{user.name}</li>)}
+        </ul>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({ users: state.users })
+const mapStateToProps = state => ({
+  users: state.users,
+})
 
 export default connect(mapStateToProps, { fetchUsers })(UsersList)
