@@ -1,8 +1,9 @@
-import developmentKeys from './development'
-import productionKeys from './production'
+const productionKeys = require('./production')
+const developmentKeys = require('./development')
 
 if (process.env.NODE_ENV === 'production') {
-  return productionKeys
+  module.exports = productionKeys
 } else {
-  return developmentKeys
+  module.exports = developmentKeys
 }
+
