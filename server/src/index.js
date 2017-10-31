@@ -1,5 +1,7 @@
 import 'babel-polyfill'
 import express from 'express'
+import { matchRoutes } from 'react-router-config'
+import Routes from './client/Routes'
 import createStore from './helpers/createStore'
 import renderer from './helpers/renderer'
 
@@ -12,7 +14,12 @@ app.use(express.static('public'))
 
 app.get('*', (req, res) => {
   const store = createStore()
-  // Do some logic to initialize and load data into the store
+
+  // matchRoutes takes in a routes config and the path the user is trying to hit
+  // and returns an array of matched paths (objects) that contains the exact
+  // React component needed to load for that path.
+  console.log(matchRoutes(Routes, req.path))
+
   res.send(renderer(req, store)).status(200)
 })
 

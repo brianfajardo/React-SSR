@@ -38048,6 +38048,7 @@ var _UsersPage2 = _interopRequireDefault(_UsersPage);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // react-router-config configuration shape.
+// For use with data loading in serverside rendering.
 var Routes = [{
   path: '/',
   component: _Landing2.default,
