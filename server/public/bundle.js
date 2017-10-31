@@ -27853,15 +27853,52 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(80);
 
-var rootReducer = (0, _redux.combineReducers)({
-  state: function state() {
-    var _state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+var _usersReducer = __webpack_require__(119);
 
-    return _state;
-  }
+var _usersReducer2 = _interopRequireDefault(_usersReducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = (0, _redux.combineReducers)({
+  users: _usersReducer2.default
 });
 
-exports.default = rootReducer;
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__(120);
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actionTypes.FETCH_USERS:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var FETCH_USERS = exports.FETCH_USERS = 'Halloween is tomorrow!!';
 
 /***/ })
 /******/ ]);

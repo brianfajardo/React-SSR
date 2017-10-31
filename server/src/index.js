@@ -1,5 +1,5 @@
 import express from 'express'
-import { renderer, createStore } from './helpers'
+import helpers from './helpers'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -9,9 +9,9 @@ const PORT = process.env.PORT || 3000
 app.use(express.static('public'))
 
 app.get('*', (req, res) => {
-  const store = createStore()
+  const store = helpers.createStore()
   // Do some logic to initialize and load data into the store
-  res.send(renderer(req, store)).status(200)
+  res.send(helpers.renderer(req, store)).status(200)
 })
 
 app.listen(PORT, () => console.log(`Server listening on Port:${PORT}`))
