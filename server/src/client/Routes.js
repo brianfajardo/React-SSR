@@ -1,5 +1,5 @@
-import Landing from './components/Landing'
-import UsersPage, { loadData } from './containers/UsersPage'
+import LandingPage from './pageContainers/LandingPage'
+import UsersListPage from './pageContainers/UsersListPage'
 
 // react-router-config configuration shape.
 // For use with data loading in serverside rendering.
@@ -7,13 +7,13 @@ const Routes = [
   {
     path: '/',
     exact: true,
-    component: Landing,
+    component: LandingPage,
   },
   {
     path: '/users',
     exact: true,
-    component: UsersPage,
-    loadData,
+    // Avoiding naming collisions with similar loadData functions.
+    ...UsersListPage,
   },
 ]
 

@@ -5,7 +5,7 @@ import { fetchUsers } from '../actions'
 
 import UsersList from '../components/UsersList'
 
-class UsersPage extends Component {
+class UsersListPage extends Component {
   static propTypes = {
     fetchUsers: PropTypes.func,
     users: PropTypes.array,
@@ -39,5 +39,7 @@ const mapStateToProps = state => ({
 // and injected into the HTML template. Note this RETURNS A PROMISE!
 const loadData = store => store.dispatch(fetchUsers())
 
-export default connect(mapStateToProps, { fetchUsers })(UsersPage)
-export { loadData }
+export default {
+  component: connect(mapStateToProps, { fetchUsers })(UsersListPage),
+  loadData,
+}
