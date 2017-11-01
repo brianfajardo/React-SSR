@@ -17,11 +17,15 @@ app.get('*', (req, res) => {
   // matchRoutes takes in a routes config and the path the user is trying to hit
   // and returns an array of matched paths (objects) that contains the exact
   // React component and its loadData function needed to fetch data.
-  matchRoutes(Routes, req.path).map(({ route }) => {
-    if (route.loadData) return route.loadData()
+  // Will return an array of pending network requests (promises).
+  const apiRequests = matchRoutes(Routes, req.path).map(({ route }) => {
+    if (route.loadData) return route.loadData(store)
   })
 
-  res.send(renderer(req, store)).status(200)
+  // Once promises are resolved, store is updated with the fetched data.
+  Promise.all(apiRequests).then(() => {
+    res.send(renderer(req, store)).status(200)
+  })
 })
 
 app.listen(PORT, () => {

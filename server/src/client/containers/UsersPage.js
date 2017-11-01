@@ -34,11 +34,10 @@ const mapStateToProps = state => ({
 })
 
 // Function used to fetch data before being server-side rendered.
-// Ie. Before JSX is passed to renderToString and injected into the
-// HTML template, fetch data from API and feed data into this component.
-const loadData = () => {
-  console.log('UsersPage is trying to load some data maaaan!')
-}
+// Manually dispatching (from store) fetchUsers action creator to make
+// our API request. To be done before JSX is passed to renderToString
+// and injected into the HTML template. Note this RETURNS A PROMISE!
+const loadData = store => store.dispatch(fetchUsers())
 
 export default connect(mapStateToProps, { fetchUsers })(UsersPage)
 export { loadData }

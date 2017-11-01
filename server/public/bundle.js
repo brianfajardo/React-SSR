@@ -13504,11 +13504,7 @@ var App = function App() {
     _react2.default.createElement(
       _reactRouterDom.BrowserRouter,
       null,
-      _react2.default.createElement(
-        'div',
-        null,
-        (0, _reactRouterConfig.renderRoutes)(_Routes2.default)
-      )
+      (0, _reactRouterConfig.renderRoutes)(_Routes2.default)
     )
   );
 };
@@ -38180,10 +38176,11 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 // Function used to fetch data before being server-side rendered.
-// Ie. Before JSX is passed to renderToString and injected into the
-// HTML template, fetch data from API and feed data into this component.
-var loadData = function loadData() {
-  console.log('UsersPage is trying to load some data maaaan!');
+// Manually dispatching (from store) fetchUsers action creator to make
+// our API request. To be done before JSX is passed to renderToString
+// and injected into the HTML template. Note this RETURNS A PROMISE!
+var loadData = function loadData(store) {
+  return store.dispatch((0, _actions.fetchUsers)());
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersPage);

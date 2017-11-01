@@ -11,7 +11,7 @@ import Routes from './Routes'
 const App = () => (
   <Provider store={store()}>
     <BrowserRouter>
-      <div>{renderRoutes(Routes)}</div>
+      {renderRoutes(Routes)}
     </BrowserRouter>
   </Provider>
 )

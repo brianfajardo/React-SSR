@@ -7,10 +7,7 @@ import { renderRoutes } from 'react-router-config'
 import Routes from '../client/Routes'
 
 export default (req, store) => {
-  // Context object contains the results of the render. In a static server environment
-  // we can't change the app state. Instead, we use the context prop to find out what
-  // the result of rendering was. If we find a context.url, then we know the app redirected.
-  // This allows us to send a proper redirect from the server.
+  // Context object contains the results of the render.
   const context = {}
 
   // JSX is given to renderToString to be passed as content to fill the html template
@@ -19,7 +16,7 @@ export default (req, store) => {
   const content = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.path} context={context}>
-        <div>{renderRoutes(Routes)}</div>
+        {renderRoutes(Routes)}
       </StaticRouter>
     </Provider>
   )
