@@ -2,8 +2,7 @@ import 'babel-polyfill'
 import express from 'express'
 import { matchRoutes } from 'react-router-config'
 import Routes from './client/Routes'
-import createStore from './helpers/createStore'
-import renderer from './helpers/renderer'
+import { createStore, renderer } from './helpers'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -17,8 +16,10 @@ app.get('*', (req, res) => {
 
   // matchRoutes takes in a routes config and the path the user is trying to hit
   // and returns an array of matched paths (objects) that contains the exact
-  // React component needed to load for that path.
-  console.log(matchRoutes(Routes, req.path))
+  // React component and its loadData function needed to fetch data.
+  matchRoutes(Routes, req.path).map(({ route }) => {
+    if (route.loadData) return route.loadData()
+  })
 
   res.send(renderer(req, store)).status(200)
 })

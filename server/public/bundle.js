@@ -38051,12 +38051,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // For use with data loading in serverside rendering.
 var Routes = [{
   path: '/',
-  component: _Landing2.default,
-  exact: true
+  exact: true,
+  component: _Landing2.default
 }, {
   path: '/users',
+  exact: true,
   component: _UsersPage2.default,
-  exact: true
+  loadData: _UsersPage.loadData
 }];
 
 exports.default = Routes;
@@ -38098,6 +38099,7 @@ exports.default = Landing;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.loadData = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -38177,7 +38179,15 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
+// Function used to fetch data before being server-side rendered.
+// Ie. Before JSX is passed to renderToString and injected into the
+// HTML template, fetch data from API and feed data into this component.
+var loadData = function loadData() {
+  console.log('UsersPage is trying to load some data maaaan!');
+};
+
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersPage);
+exports.loadData = loadData;
 
 /***/ }),
 /* 462 */
