@@ -13497,10 +13497,11 @@ var _Routes2 = _interopRequireDefault(_Routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Client state is initialized with state preserved from the server.
 var App = function App() {
   return _react2.default.createElement(
     _reactRedux.Provider,
-    { store: (0, _store2.default)() },
+    { store: (0, _store2.default)(window.INITIAL_STATE) },
     _react2.default.createElement(
       _reactRouterDom.BrowserRouter,
       null,
@@ -39186,11 +39187,7 @@ var UsersListPage = function (_Component) {
         'div',
         null,
         'This is a public users list:',
-        isLoading ? _react2.default.createElement(
-          'h1',
-          null,
-          'Loading in 2017 \uD83D\uDE39'
-        ) : _react2.default.createElement(_UsersList2.default, { users: users })
+        _react2.default.createElement(_UsersList2.default, { users: users })
       );
     }
   }]);

@@ -10,9 +10,9 @@ export default (req, store) => {
   // Context object contains the results of the render.
   const context = {}
 
-  // JSX is given to renderToString to be passed as content to fill the html template
-  // for initial SSR HTML.
-  // renderRoutes takes the Routes array and returns the specified component.
+  // JSX is given to renderToString to be passed as content to
+  // fill the html template for initial SSR HTML. renderRoutes
+  // takes the Routes array and returns the specified component.
   const content = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.path} context={context}>
@@ -21,12 +21,15 @@ export default (req, store) => {
     </Provider>
   )
 
-  // Todo: Replace this html template with an actual index.html and replace stuff...
+  // Preserving server store/state by adding JSON data to the window.
   return `
     <html>
       <head></head>
       <body>
         <div id="root">${content}</div>
+        <script>
+          window.INITIAL_STATE = ${JSON.stringify(store.getState())}
+        </script>
         <script src="bundle.js"></script>
       </body>
     </html>

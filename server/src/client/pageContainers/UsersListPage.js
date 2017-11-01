@@ -22,7 +22,7 @@ class UsersListPage extends Component {
     return (
       <div>
         This is a public users list:
-        {isLoading ? <h1>Loading in 2017 😹</h1> : <UsersList users={users} />}
+        <UsersList users={users} />
       </div>
     )
   }
