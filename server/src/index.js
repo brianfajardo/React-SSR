@@ -7,24 +7,19 @@ import { createStore, renderer, makeComponentRequests } from './helpers'
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Because cookies are restricted to domain name basis,
-// authenticated request for resources to this server (rendering),
-// must be proxied to the API server and carry the cookie.
+// Middleware
 app.use('/api', proxy(config.API_URL))
-
-// Expose the public directory containing the
-// Webpack client bundle to rehydrate React app.
 app.use(express.static('public'))
 
-app.get('*', (req, res) => {
+// Glob route for initial server-side request
+app.get('*', async (req, res) => {
   const store = createStore(req)
   const componentRequests = makeComponentRequests(req, store)
 
+  await Promise.all(componentRequests)
   // Once promises are resolved, store is updated with the
   // fetched data and UI is updated to reflect the new state.
-  Promise.all(componentRequests).then(() => {
-    res.send(renderer(req, store)).status(200)
-  })
+  res.send(renderer(req, store)).status(200)
 })
 
 app.listen(PORT, () => {

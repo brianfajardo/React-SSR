@@ -5,18 +5,16 @@ import { BrowserRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 import { Provider } from 'react-redux'
 
-// Client state is initialized with state preserved from the server.
 import store from './store'
 import Routes from './Routes'
 
-const App = () => (
-  <Provider store={store(window.INITIAL_STATE)}>
-    <BrowserRouter>
-      {renderRoutes(Routes)}
-    </BrowserRouter>
-  </Provider>
-)
+// After initial server request, when bundle.js is loaded, preserve and
+// attach event handlers (hydrate). Initialize client state from state
+// preserved from the server as JSON.
 
-// Breathing life into HTML template sent by server on initial server request.
-// Ie. binding event handlers to the DOM.
-ReactDOM.hydrate(<App />, document.getElementById('root'))
+ReactDOM.hydrate(
+  <Provider store={store(window.INITIAL_STATE)}>
+    <BrowserRouter>{renderRoutes(Routes)}</BrowserRouter>
+  </Provider>,
+  document.getElementById('root')
+)

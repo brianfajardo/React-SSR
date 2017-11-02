@@ -1,3 +1,4 @@
+import App from './App'
 import LandingPage from './pageContainers/LandingPage'
 import UsersListPage from './pageContainers/UsersListPage'
 
@@ -5,15 +6,20 @@ import UsersListPage from './pageContainers/UsersListPage'
 // For use with data loading in serverside rendering.
 const Routes = [
   {
-    path: '/',
-    exact: true,
-    component: LandingPage,
-  },
-  {
-    path: '/users',
-    exact: true,
-    // Avoiding naming collisions with similar loadData functions.
-    ...UsersListPage,
+    component: App,
+    routes: [
+      {
+        path: '/',
+        exact: true,
+        component: LandingPage,
+      },
+      {
+        path: '/users',
+        exact: true,
+        // Avoiding naming collisions with similar loadData functions.
+        ...UsersListPage,
+      },
+    ],
   },
 ]
 
