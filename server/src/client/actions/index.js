@@ -1,9 +1,7 @@
-import axios from 'axios'
 import { FETCH_USERS, LOADING } from './actionTypes'
-import keys from '../../../config'
 
-export const fetchUsers = () => async dispatch => {
+export const fetchUsers = () => async (dispatch, getState, api) => {
   dispatch({ type: LOADING })
-  const { data } = await axios.get(`${keys.BASE_API_URL}/users`)
+  const { data } = await api.get('/users')
   return dispatch({ type: FETCH_USERS, payload: data })
 }
