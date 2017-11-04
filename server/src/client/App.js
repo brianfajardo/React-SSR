@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { renderRoutes } from 'react-router-config'
 import PropTypes from 'prop-types'
 
-const App = ({ route }) => (
-  <div>
-    <h1>HEADER PLACEHOLDER</h1>
-    {renderRoutes(route.routes)}
-  </div>
-)
+import Navbar from './components/Navbar'
 
-App.propTypes = {
-  route: PropTypes.object,
+class App extends Component {
+
+  static propTypes = {
+    route: PropTypes.object,
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar />
+        {renderRoutes(this.props.route.routes)}
+      </div>
+    )
+  }
 }
 
 export default App
