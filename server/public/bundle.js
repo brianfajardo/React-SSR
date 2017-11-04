@@ -39123,9 +39123,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var LandingPage = function LandingPage() {
   return _react2.default.createElement(
-    'h1',
-    null,
-    'LANDING PAGE! \u2708\uFE0F'
+    'div',
+    { className: 'center', style: { marginTop: '100px' } },
+    _react2.default.createElement(
+      'h3',
+      null,
+      'Landing Page \u2708\uFE0F'
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      'just trying out serverside React rendering'
+    )
   );
 };
 
@@ -39375,33 +39384,47 @@ var Navbar = function Navbar(_ref) {
   ) : _react2.default.createElement(
     'a',
     { href: '/api/auth/facebook' },
-    'Login'
+    'Login with Facebook'
   );
 
   return _react2.default.createElement(
-    'div',
+    'nav',
     null,
-    'React SSR Playground',
     _react2.default.createElement(
-      'p',
-      null,
-      'Current status: ',
-      auth ? 'AUTHORIZED' : 'UNAUTHORIZED'
-    ),
-    _react2.default.createElement(
-      'ul',
-      null,
+      'div',
+      { className: 'nav-wrapper light-blue' },
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { to: '/users' },
-        'Users'
+        { to: '/', className: 'brand-logo left' },
+        '\u26F5\uFE0F Playground'
       ),
       _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/admins' },
-        'Admins'
-      ),
-      LoginButton
+        'ul',
+        { className: 'right' },
+        _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/users' },
+            'Users'
+          )
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/admins' },
+            'Admins'
+          )
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          LoginButton
+        )
+      )
     )
   );
 };

@@ -24,7 +24,9 @@ export default (req, store) => {
   // Preserving server store/state by adding JSON data to the window.
   return `
     <html>
-      <head></head>
+      <head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+      </head>
       <body>
         <div id="root">${content}</div>
         <script>
