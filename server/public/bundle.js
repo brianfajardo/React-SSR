@@ -39005,8 +39005,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // react-router-config configuration shape.
 // For use with data loading in serverside rendering.
-var Routes = [{
-  component: _App2.default,
+var Routes = [_extends({}, _App2.default, {
   routes: [{
     path: '/',
     exact: true,
@@ -39015,7 +39014,7 @@ var Routes = [{
     path: '/users',
     exact: true
   }, _UsersListPage2.default)]
-}];
+})];
 
 exports.default = Routes;
 
@@ -39098,7 +39097,13 @@ var mapStateToProps = function mapStateToProps(state) {
   return { auth: state.auth };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchAuthUser: _actions.fetchAuthUser })(App);
+exports.default = {
+  component: (0, _reactRedux.connect)(mapStateToProps, { fetchAuthUser: _actions.fetchAuthUser })(App),
+  loadData: function loadData(_ref) {
+    var dispatch = _ref.dispatch;
+    return dispatch((0, _actions.fetchAuthUser)());
+  }
+};
 
 /***/ }),
 /* 483 */
@@ -39181,16 +39186,11 @@ var UsersListPage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          isLoading = _props.isLoading,
-          users = _props.users;
-
-
       return _react2.default.createElement(
         'div',
         null,
         'This is a public users list:',
-        _react2.default.createElement(_UsersList2.default, { users: users })
+        _react2.default.createElement(_UsersList2.default, { users: this.props.users })
       );
     }
   }]);
@@ -39212,17 +39212,17 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-// Function used to fetch data before being server-side rendered.
-// Manually dispatching (from store) fetchUsers action creator to make
-// our API request. To be done before JSX is passed to renderToString
-// and injected into the HTML template. Note this RETURNS A PROMISE!
-var loadData = function loadData(store) {
-  return store.dispatch((0, _actions.fetchUsers)());
-};
-
 exports.default = {
   component: (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersListPage),
-  loadData: loadData
+
+  // Function used to fetch data before being server-side rendered.
+  // Manually dispatching (from store) fetchUsers action creator to make
+  // our API request. To be done before JSX is passed to renderToString
+  // and injected into the HTML template. Note this RETURNS A PROMISE!
+  loadData: function loadData(_ref) {
+    var dispatch = _ref.dispatch;
+    return dispatch((0, _actions.fetchUsers)());
+  }
 };
 
 /***/ }),

@@ -17,12 +17,10 @@ class UsersListPage extends Component {
   }
 
   render() {
-    const { isLoading, users } = this.props
-
     return (
       <div>
         This is a public users list:
-        <UsersList users={users} />
+        <UsersList users={this.props.users} />
       </div>
     )
   }
@@ -33,13 +31,12 @@ const mapStateToProps = state => ({
   isLoading: state.users.loading,
 })
 
-// Function used to fetch data before being server-side rendered.
-// Manually dispatching (from store) fetchUsers action creator to make
-// our API request. To be done before JSX is passed to renderToString
-// and injected into the HTML template. Note this RETURNS A PROMISE!
-const loadData = store => store.dispatch(fetchUsers())
-
 export default {
   component: connect(mapStateToProps, { fetchUsers })(UsersListPage),
-  loadData,
+
+  // Function used to fetch data before being server-side rendered.
+  // Manually dispatching (from store) fetchUsers action creator to make
+  // our API request. To be done before JSX is passed to renderToString
+  // and injected into the HTML template. Note this RETURNS A PROMISE!
+  loadData: ({ dispatch }) => dispatch(fetchUsers()),
 }

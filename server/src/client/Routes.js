@@ -6,7 +6,7 @@ import UsersListPage from './pageContainers/UsersListPage'
 // For use with data loading in serverside rendering.
 const Routes = [
   {
-    component: App,
+    ...App,
     routes: [
       {
         path: '/',
