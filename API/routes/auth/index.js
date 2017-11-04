@@ -2,5 +2,9 @@ const facebook = require('./facebook')
 
 module.exports = {
   facebook,
-  // Other oAuth strategies like Google or Twitter can also be set up.
+
+  getCurrentUser(req, res) {
+    if (!req.user) return res.send({ error: 'Please login.' }).status(401)
+    res.send(req.user).status(200)
+  },
 }

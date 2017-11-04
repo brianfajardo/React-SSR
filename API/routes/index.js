@@ -21,6 +21,8 @@ module.exports = app => {
     auth.facebook.callback
   )
 
+  app.get('/auth/current_user', auth.getCurrentUser)
+
   // User routes
   app.get('/users', user.getUserList)
   app.get('/admins', requireAuth, user.getAdminList)
