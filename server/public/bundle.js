@@ -8196,6 +8196,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var FETCH_USERS = exports.FETCH_USERS = 'Halloween is tomorrow!!';
 var LOADING = exports.LOADING = 'loading in 2017 feels bad..';
+var FETCH_AUTH_USER = exports.FETCH_AUTH_USER = 'mitochondria';
 
 /***/ }),
 /* 183 */
@@ -38880,10 +38881,15 @@ var _usersReducer = __webpack_require__(477);
 
 var _usersReducer2 = _interopRequireDefault(_usersReducer);
 
+var _authReducer = __webpack_require__(488);
+
+var _authReducer2 = _interopRequireDefault(_authReducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
-  users: _usersReducer2.default
+  users: _usersReducer2.default,
+  auth: _authReducer2.default
 });
 
 /***/ }),
@@ -39036,6 +39042,10 @@ var _propTypes = __webpack_require__(11);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _reactRedux = __webpack_require__(168);
+
+var _actions = __webpack_require__(485);
+
 var _Navbar = __webpack_require__(487);
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
@@ -39058,12 +39068,17 @@ var App = function (_Component) {
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchAuthUser();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Navbar2.default, null),
+        _react2.default.createElement(_Navbar2.default, { auth: this.props.auth }),
         (0, _reactRouterConfig.renderRoutes)(this.props.route.routes)
       );
     }
@@ -39073,9 +39088,17 @@ var App = function (_Component) {
 }(_react.Component);
 
 App.propTypes = {
-  route: _propTypes2.default.object
+  route: _propTypes2.default.object,
+  auth: _propTypes2.default.object,
+  fetchAuthUser: _propTypes2.default.func
 };
-exports.default = App;
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return { auth: state.auth };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchAuthUser: _actions.fetchAuthUser })(App);
 
 /***/ }),
 /* 483 */
@@ -39212,7 +39235,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchUsers = undefined;
+exports.fetchAuthUser = exports.fetchUsers = undefined;
 
 var _actionTypes = __webpack_require__(182);
 
@@ -39246,6 +39269,37 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
 
     return function (_x, _x2, _x3) {
       return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchAuthUser = exports.fetchAuthUser = function fetchAuthUser() {
+  return function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch, getState, api) {
+      var _ref4, data;
+
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return api.get('/auth/current_user');
+
+            case 2:
+              _ref4 = _context2.sent;
+              data = _ref4.data;
+              return _context2.abrupt('return', dispatch({ type: _actionTypes.FETCH_AUTH_USER, payload: data }));
+
+            case 5:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined);
+    }));
+
+    return function (_x4, _x5, _x6) {
+      return _ref3.apply(this, arguments);
     };
   }();
 };
@@ -39309,13 +39363,24 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(401);
 
+var _propTypes = __webpack_require__(11);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Navbar = function Navbar(props) {
+var Navbar = function Navbar(_ref) {
+  var auth = _ref.auth;
   return _react2.default.createElement(
     'div',
     null,
     'React SRR Playground',
+    _react2.default.createElement(
+      'p',
+      null,
+      'Auth status is: ',
+      auth ? 'true' : 'false'
+    ),
     _react2.default.createElement(
       'ul',
       null,
@@ -39338,7 +39403,40 @@ var Navbar = function Navbar(props) {
   );
 };
 
+Navbar.propTypes = {
+  auth: _propTypes2.default.object
+};
+
 exports.default = Navbar;
+
+/***/ }),
+/* 488 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _actionTypes = __webpack_require__(182);
+
+// Default auth state is null; don't know if the user is currently
+// authenticated or not. If a payload exist containing data from the server
+// update state with the user object, or, return false (aka. user isnt auth'd)
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actionTypes.FETCH_AUTH_USER:
+      return action.payload || false;
+    default:
+      return state;
+  }
+};
 
 /***/ })
 /******/ ]);
