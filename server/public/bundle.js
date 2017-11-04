@@ -39088,7 +39088,6 @@ var App = function (_Component) {
 
 App.propTypes = {
   route: _propTypes2.default.object,
-  auth: _propTypes2.default.object,
   fetchAuthUser: _propTypes2.default.func
 };
 
@@ -39363,23 +39362,31 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(401);
 
-var _propTypes = __webpack_require__(11);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Navbar = function Navbar(_ref) {
   var auth = _ref.auth;
+
+
+  var LoginButton = auth ? _react2.default.createElement(
+    'a',
+    { href: '/api/logout' },
+    'Logout'
+  ) : _react2.default.createElement(
+    'a',
+    { href: '/api/auth/facebook' },
+    'Login'
+  );
+
   return _react2.default.createElement(
     'div',
     null,
-    'React SRR Playground',
+    'React SSR Playground',
     _react2.default.createElement(
       'p',
       null,
-      'Auth status is: ',
-      auth ? 'true' : 'false'
+      'Current status: ',
+      auth ? 'AUTHORIZED' : 'UNAUTHORIZED'
     ),
     _react2.default.createElement(
       'ul',
@@ -39394,17 +39401,9 @@ var Navbar = function Navbar(_ref) {
         { to: '/admins' },
         'Admins'
       ),
-      _react2.default.createElement(
-        'button',
-        null,
-        'Login/Logout'
-      )
+      LoginButton
     )
   );
-};
-
-Navbar.propTypes = {
-  auth: _propTypes2.default.object
 };
 
 exports.default = Navbar;

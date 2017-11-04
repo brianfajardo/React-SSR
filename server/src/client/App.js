@@ -9,7 +9,6 @@ import Navbar from './components/Navbar'
 class App extends Component {
   static propTypes = {
     route: PropTypes.object,
-    auth: PropTypes.object,
     fetchAuthUser: PropTypes.func,
   }
 

@@ -15,6 +15,8 @@ module.exports = app => {
     passport.authenticate('facebook', { scope: ['email', 'public_profile'] })
   )
 
+  // Facebook callback is returned to the client URL and then proxied (proxy: /api/) to
+  // the API server so that redirect context is that of the browser and not the API server.
   app.get(
     '/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/' }),
