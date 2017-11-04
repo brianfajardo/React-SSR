@@ -14,7 +14,7 @@ export default (req, initialState = {}) => {
   // attaches the browser request's cookie session.
   const axiosInstance = axios.create({
     baseURL: config.API_URL,
-    headers: { cookie: req.get('cookie') },
+    headers: { cookie: req.get('cookie') || '' },
   })
 
   const middleware = applyMiddleware(
