@@ -13,17 +13,22 @@ app.use(express.static('public'))
 
 // Glob route for initial server-side request
 app.get('*', async (req, res) => {
+  let content
   const staticRouterContext = {}
   const store = createStore(req)
+  const componentRequests = makeComponentRequests(req, store)
 
-  // If the router context contains the pageNotFound property, this means
-  // that the 404 Page was rendered (serverside). Send 404 as response.
+  await Promise.all(componentRequests)
+
+  // Once above Promises are resolved, Redux store (via rootReducer)
+  // is updated with the new state before being rendered (renderToString).
+  content = renderer(req, store, staticRouterContext)
+
+  // renderer will update the StaticRouter context object
+  // with properties when certain components are rendered.
   if (staticRouterContext.pageNotFound) res.status(404)
 
-  await Promise.all(makeComponentRequests(req, store))
-  // Once promises are resolved, store is updated with the
-  // fetched data and UI is updated to reflect the new state.
-  res.status(200).send(renderer(req, store, staticRouterContext))
+  res.status(200).send(content)
 })
 
 app.listen(PORT, () => {
