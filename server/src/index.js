@@ -14,7 +14,7 @@ app.use(express.static('public'))
 // Glob route for initial server-side request
 app.get('*', async (req, res) => {
   let content
-  const staticRouterContext = {}
+  const routerContext = {}
   const store = createStore(req)
   const componentRequests = makeComponentRequests(req, store)
 
@@ -22,11 +22,12 @@ app.get('*', async (req, res) => {
 
   // Once above Promises are resolved, Redux store (via rootReducer)
   // is updated with the new state before being rendered (renderToString).
-  content = renderer(req, store, staticRouterContext)
+  content = renderer(req, store, routerContext)
 
   // renderer will update the StaticRouter context object
   // with properties when certain components are rendered.
-  if (staticRouterContext.pageNotFound) res.status(404)
+  if (routerContext.pageNotFound) res.status(404)
+  if (routerContext.url) return res.redirect(routerContext.url)
 
   res.status(200).send(content)
 })
