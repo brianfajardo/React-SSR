@@ -1,6 +1,7 @@
 import App from './App'
 import LandingPage from './pageContainers/LandingPage'
 import UsersListPage from './pageContainers/UsersListPage'
+import NotFoundPage from './pageContainers/NotFoundPage'
 
 // react-router-config configuration shape.
 // For use with data loading in serverside rendering.
@@ -18,6 +19,11 @@ const Routes = [
         exact: true,
         // Avoiding naming collisions with similar loadData functions.
         ...UsersListPage,
+      },
+      {
+        // If a path is not specified and does not match any other route,
+        // React-router will automatically show this component.
+        component: NotFoundPage,
       },
     ],
   },
