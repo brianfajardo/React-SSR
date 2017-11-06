@@ -15,7 +15,6 @@ class AdminsListPage extends Component {
   }
 
   render() {
-    console.log('admins list:', this.props.admins)
     return (
       <div>
         This is a protected resource and should only be visible after

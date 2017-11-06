@@ -15,17 +15,15 @@ app.use(express.static('public'))
 app.get('*', async (req, res) => {
   const staticRouterContext = {}
   const store = createStore(req)
-  const componentRequests = makeComponentRequests(req, store)
-  const content = renderer(req, store, staticRouterContext)
 
   // If the router context contains the pageNotFound property, this means
   // that the 404 Page was rendered (serverside). Send 404 as response.
   if (staticRouterContext.pageNotFound) res.status(404)
 
-  await Promise.all(componentRequests)
+  await Promise.all(makeComponentRequests(req, store))
   // Once promises are resolved, store is updated with the
   // fetched data and UI is updated to reflect the new state.
-  res.status(200).send(content)
+  res.status(200).send(renderer(req, store, staticRouterContext))
 })
 
 app.listen(PORT, () => {

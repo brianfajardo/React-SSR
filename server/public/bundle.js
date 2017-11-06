@@ -39623,7 +39623,6 @@ var AdminsListPage = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log('admins list:', this.props.admins);
       return _react2.default.createElement(
         'div',
         null,
