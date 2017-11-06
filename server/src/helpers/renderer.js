@@ -6,10 +6,7 @@ import { renderRoutes } from 'react-router-config'
 
 import Routes from '../client/Routes'
 
-export default (req, store) => {
-  // Context object contains the results of the render.
-  const context = {}
-
+export default (req, store, context) => {
   // JSX is given to renderToString to be passed as content to
   // fill the html template for initial SSR HTML. renderRoutes
   // takes the Routes array and returns the specified component.

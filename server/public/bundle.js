@@ -39485,9 +39485,22 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(160);
 
+var _propTypes = __webpack_require__(11);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NotFoundPage = function NotFoundPage() {
+// staticContext is the object received from StaticRouter.
+// Note: We only have access to staticContext on the serverside
+// of things because the client will use BrowserRouter instead.
+
+var NotFoundPage = function NotFoundPage(_ref) {
+  var _ref$staticContext = _ref.staticContext,
+      staticContext = _ref$staticContext === undefined ? {} : _ref$staticContext;
+
+  staticContext.pageNotFound = true;
+
   return _react2.default.createElement(
     'div',
     { className: 'center', style: { marginTop: '100px' } },
@@ -39502,6 +39515,10 @@ var NotFoundPage = function NotFoundPage() {
       'Return home?'
     )
   );
+};
+
+NotFoundPage.propTypes = {
+  staticContext: _propTypes2.default.object
 };
 
 exports.default = NotFoundPage;
