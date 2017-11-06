@@ -1,6 +1,7 @@
 import App from './App'
 import LandingPage from './pageContainers/LandingPage'
 import UsersListPage from './pageContainers/UsersListPage'
+import AdminsListPage from './pageContainers/AdminsListPage'
 import NotFoundPage from './pageContainers/NotFoundPage'
 
 // react-router-config configuration shape.
@@ -19,6 +20,11 @@ const Routes = [
         exact: true,
         // Avoiding naming collisions with similar loadData functions.
         ...UsersListPage,
+      },
+      {
+        path: '/admins',
+        exact: true,
+        ...AdminsListPage,
       },
       {
         // If a path is not specified and does not match any other route,

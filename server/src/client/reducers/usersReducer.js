@@ -1,8 +1,9 @@
-import { FETCH_USERS, LOADING } from '../actions/actionTypes'
+import { FETCH_USERS, FETCH_ADMINS, LOADING } from '../actions/actionTypes'
 
 const initialState = {
   loading: false,
   users: [],
+  admins: [],
 }
 
 export default (state = initialState, action) => {
@@ -17,6 +18,12 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         users: action.payload,
+      }
+    case FETCH_ADMINS:
+      return {
+        ...state,
+        loading: false,
+        admins: action.payload,
       }
     default:
       return state

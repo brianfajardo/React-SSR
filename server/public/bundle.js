@@ -4886,6 +4886,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var FETCH_USERS = exports.FETCH_USERS = 'Halloween is tomorrow!!';
+var FETCH_ADMINS = exports.FETCH_ADMINS = 'san diego';
 var LOADING = exports.LOADING = 'loading in 2017 feels bad..';
 var FETCH_AUTH_USER = exports.FETCH_AUTH_USER = 'mitochondria';
 
@@ -8267,7 +8268,7 @@ module.exports = Cancel;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchAuthUser = exports.fetchUsers = undefined;
+exports.fetchAuthUser = exports.fetchAdmins = exports.fetchUsers = undefined;
 
 var _actionTypes = __webpack_require__(119);
 
@@ -8305,7 +8306,7 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
   }();
 };
 
-var fetchAuthUser = exports.fetchAuthUser = function fetchAuthUser() {
+var fetchAdmins = exports.fetchAdmins = function fetchAdmins() {
   return function () {
     var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch, getState, api) {
       var _ref4, data;
@@ -8314,15 +8315,16 @@ var fetchAuthUser = exports.fetchAuthUser = function fetchAuthUser() {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return api.get('/auth/current_user');
+              dispatch({ type: _actionTypes.LOADING });
+              _context2.next = 3;
+              return api.get('/admins');
 
-            case 2:
+            case 3:
               _ref4 = _context2.sent;
               data = _ref4.data;
-              return _context2.abrupt('return', dispatch({ type: _actionTypes.FETCH_AUTH_USER, payload: data }));
+              return _context2.abrupt('return', dispatch({ type: _actionTypes.FETCH_ADMINS, payload: data }));
 
-            case 5:
+            case 6:
             case 'end':
               return _context2.stop();
           }
@@ -8332,6 +8334,37 @@ var fetchAuthUser = exports.fetchAuthUser = function fetchAuthUser() {
 
     return function (_x4, _x5, _x6) {
       return _ref3.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchAuthUser = exports.fetchAuthUser = function fetchAuthUser() {
+  return function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch, getState, api) {
+      var _ref6, data;
+
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return api.get('/auth/current_user');
+
+            case 2:
+              _ref6 = _context3.sent;
+              data = _ref6.data;
+              return _context3.abrupt('return', dispatch({ type: _actionTypes.FETCH_AUTH_USER, payload: data }));
+
+            case 5:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined);
+    }));
+
+    return function (_x7, _x8, _x9) {
+      return _ref5.apply(this, arguments);
     };
   }();
 };
@@ -38988,7 +39021,8 @@ var _actionTypes = __webpack_require__(119);
 
 var initialState = {
   loading: false,
-  users: []
+  users: [],
+  admins: []
 };
 
 exports.default = function () {
@@ -39004,6 +39038,11 @@ exports.default = function () {
       return _extends({}, state, {
         loading: false,
         users: action.payload
+      });
+    case _actionTypes.FETCH_ADMINS:
+      return _extends({}, state, {
+        loading: false,
+        admins: action.payload
       });
     default:
       return state;
@@ -39109,6 +39148,10 @@ var _UsersListPage = __webpack_require__(487);
 
 var _UsersListPage2 = _interopRequireDefault(_UsersListPage);
 
+var _AdminsListPage = __webpack_require__(490);
+
+var _AdminsListPage2 = _interopRequireDefault(_AdminsListPage);
+
 var _NotFoundPage = __webpack_require__(489);
 
 var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
@@ -39125,7 +39168,10 @@ var Routes = [_extends({}, _App2.default, {
   }, _extends({
     path: '/users',
     exact: true
-  }, _UsersListPage2.default), {
+  }, _UsersListPage2.default), _extends({
+    path: '/admins',
+    exact: true
+  }, _AdminsListPage2.default), {
     // If a path is not specified and does not match any other route,
     // React-router will automatically show this component.
     component: _NotFoundPage2.default
@@ -39522,6 +39568,96 @@ NotFoundPage.propTypes = {
 };
 
 exports.default = NotFoundPage;
+
+/***/ }),
+/* 490 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(114);
+
+var _propTypes = __webpack_require__(11);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _actions = __webpack_require__(184);
+
+var _UsersList = __webpack_require__(488);
+
+var _UsersList2 = _interopRequireDefault(_UsersList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AdminsListPage = function (_Component) {
+  _inherits(AdminsListPage, _Component);
+
+  function AdminsListPage() {
+    _classCallCheck(this, AdminsListPage);
+
+    return _possibleConstructorReturn(this, (AdminsListPage.__proto__ || Object.getPrototypeOf(AdminsListPage)).apply(this, arguments));
+  }
+
+  _createClass(AdminsListPage, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.fetchAdmins();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      console.log('admins list:', this.props.admins);
+      return _react2.default.createElement(
+        'div',
+        null,
+        'This is a protected resource and should only be visible after authentication!',
+        _react2.default.createElement(
+          'div',
+          null,
+          'Admins list:',
+          _react2.default.createElement(_UsersList2.default, { users: this.props.admins })
+        )
+      );
+    }
+  }]);
+
+  return AdminsListPage;
+}(_react.Component);
+
+AdminsListPage.propTypes = {
+  admins: _propTypes2.default.array
+};
+
+
+var mapStateToProps = function mapStateToProps(_ref) {
+  var users = _ref.users;
+  return { admins: users.admins };
+};
+
+exports.default = {
+  component: (0, _reactRedux.connect)(mapStateToProps, { fetchAdmins: _actions.fetchAdmins })(AdminsListPage),
+  loadData: function loadData(_ref2) {
+    var dispatch = _ref2.dispatch;
+    return dispatch((0, _actions.fetchAdmins)());
+  }
+};
 
 /***/ })
 /******/ ]);
