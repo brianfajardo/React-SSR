@@ -1,6 +1,8 @@
 import 'babel-polyfill'
 import express from 'express'
 import proxy from 'express-http-proxy'
+import helmet from 'helmet'
+import compression from 'compression'
 import config from '../config'
 import { createStore, renderer, makeComponentRequests } from './helpers'
 
@@ -8,8 +10,11 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 // Middleware
-app.use('/api', proxy(config.API_URL))
-app.use(express.static('public'))
+app
+  .use(helmet())
+  .use('/api', proxy(config.API_URL))
+  .use(express.static('public'))
+  .use(compression())
 
 // Glob route for initial server-side request
 app.get('*', async (req, res) => {
