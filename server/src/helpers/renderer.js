@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
+import { Helmet } from 'react-helmet'
 
 import Routes from '../client/Routes'
 
@@ -18,19 +19,29 @@ export default (req, store, context) => {
     </Provider>
   )
 
+  // Call Helmet.renderStatic after renderToString to get the head
+  // data for use in the HTML template. Helmet returns an object.
+  const helmet = Helmet.renderStatic()
+
   // Preserving server store/state by adding JSON data to the window.
   return `
     <html>
+
       <head>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <meta charset="utf-8" />
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
       </head>
+
       <body>
         <div id="root">${content}</div>
+        <script src="bundle.js"></script>
         <script>
           window.INITIAL_STATE = ${JSON.stringify(store.getState())}
         </script>
-        <script src="bundle.js"></script>
       </body>
+
     </html>
   `
 }

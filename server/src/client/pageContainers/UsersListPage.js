@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Helmet } from 'react-helmet'
 import { fetchUsers } from '../actions'
 
 import UsersList from '../components/UsersList'
@@ -16,9 +17,28 @@ class UsersListPage extends Component {
     this.props.fetchUsers()
   }
 
+  renderMeta() {
+    // Setting Open Graph protocol meta tags with react-helmet.
+    // Note: title tag expects a single string child.
+    return (
+      <Helmet>
+        <title>{`Users loaded: ${this.props.users.length}`}</title>
+        <meta property="og:title" content="Public users page" />
+        <meta property="og:type" content="webpage" />
+        <meta property="og:url" content="https://reactjs.org/logo-og.png" />
+        <meta property="og:image" content="https://reactjs.org/logo-og.png" />
+        <meta
+          property="og:description"
+          content="A resource that anyone can access without being authenticated."
+        />
+      </Helmet>
+    )
+  }
+
   render() {
     return (
       <div>
+        {this.renderMeta()}
         This is a public users list:
         <UsersList users={this.props.users} />
       </div>
